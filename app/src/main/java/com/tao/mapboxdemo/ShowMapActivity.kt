@@ -3,12 +3,10 @@ package com.tao.mapboxdemo
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.aiforcetech.map.MapBox
+import com.mapbox.geojson.Point
 import com.tao.mapboxdemo.databinding.ActivityShowMapBinding
 
 class ShowMapActivity : AppCompatActivity() {
@@ -20,6 +18,8 @@ class ShowMapActivity : AppCompatActivity() {
     }
 
     private val mapBox: MapBox by lazy { MapBox() }
+    private var center1 = Point.fromLngLat(116.303273, 40.041439)
+    private var center2 = Point.fromLngLat(117.303273, 40.041439)
 
     private lateinit var mViewBinding: ActivityShowMapBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,5 +29,17 @@ class ShowMapActivity : AppCompatActivity() {
 
         mapBox.initMapBox(mViewBinding.mapView, scope = lifecycleScope)
 
+        mViewBinding.moveBtn.setOnClickListener {
+            mapBox.cameraTo(center1,15.5)
+        }
+        mViewBinding.flyBtn.setOnClickListener {
+            mapBox.flyTo(center2,18.0,3000)
+        }
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapBox.release()
     }
 }

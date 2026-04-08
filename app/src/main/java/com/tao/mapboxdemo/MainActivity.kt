@@ -38,7 +38,22 @@ class MainActivity : AppCompatActivity() {
             when (name) {
                 functionNames[0] -> {
                     ShowMapActivity.start(this)
+                }
 
+                functionNames[1] -> {
+                    ImageOptActivity.start(this)
+                }
+
+                functionNames[2] -> {
+                    CircleOptActivity.start(this)
+                }
+
+                functionNames[3] -> {
+                    LineOptActivity.start(this)
+                }
+
+                functionNames[4] -> {
+                    PolygonOptActivity.start(this)
                 }
             }
 

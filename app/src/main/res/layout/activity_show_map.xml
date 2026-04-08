@@ -13,6 +13,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <Button
+        android:id="@+id/move_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="10dp"
+        android:text="移动视角"
+        app:layout_constraintRight_toLeftOf="@id/fly_btn"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/fly_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="移动视角（带动画）"
+        app:layout_constraintLeft_toRightOf="@id/move_btn"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/move_btn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

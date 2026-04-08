@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">MapboxDemo</string>
-    <string name="mapbox_access_token" translatable="false">你的token</string>
+    <string name="mapbox_access_token" translatable="false">你的Token</string>
 </resources>

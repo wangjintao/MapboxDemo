@@ -12,6 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MapboxDemo">
         <activity
+            android:name=".PolygonOptActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LineOptActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CircleOptActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ImageOptActivity"
+            android:exported="false" />
+        <activity
             android:name=".ShowMapActivity"
             android:exported="false" />
         <activity
