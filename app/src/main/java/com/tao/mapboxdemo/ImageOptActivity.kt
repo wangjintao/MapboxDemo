@@ -53,7 +53,7 @@ class ImageOptActivity : AppCompatActivity() {
         mViewBinding.moveBtn.setOnClickListener {
             imageMarker?.let {
                 val newPosition = PointUtil.generateRandomPointNear(center)
-                mapBox.updateImage(it, newPosition)
+                mapBox.updateImagePosition(it, newPosition)
                 mapBox.cameraTo(newPosition)
             }
         }

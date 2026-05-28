@@ -7,15 +7,12 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.toColorInt
 import androidx.lifecycle.lifecycleScope
 import com.aiforcetech.map.MapBox
-import com.aiforcetech.map.entity.ObstacleCircle
-import com.aiforcetech.map.entity.ObstaclePolygon
 import com.aiforcetech.map.entity.OptElement
-import com.aiforcetech.map.entity.PolygonData
 import com.mapbox.geojson.Point
 import com.tao.mapboxdemo.databinding.ActivityPolygonOptBinding
+import com.tao.mapboxdemo.utils.PointUtil
 import com.tao.mapboxsimple.utils.PolygonUtil
 import kotlin.random.Random
 
@@ -37,20 +34,18 @@ class PolygonOptActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mViewBinding = ActivityPolygonOptBinding.inflate(layoutInflater)
         setContentView(mViewBinding.root)
-        mapBox.initMapBox(mViewBinding.mapView, scope = lifecycleScope, onMapClickListener = { result->
-            if (result.element==null){
+        mapBox.initMapBox(mViewBinding.mapView, scope = lifecycleScope, onMapClickListener = { result ->
+            if (result.element == null) {
                 Log.d("Polygon", "initView:  点击地图")
-            }else{
+            } else {
                 Log.d("Polygon", "initView: result = ${result}")
-                when(result.element){
+                when (result.element) {
                     is OptElement.PolygonOptElement -> {
-//                        mapBox.updatePolygonStrokeWidthAndColor(result.element as OptElement.PolygonOptElement,15.0,
-//                            Color.RED)
-                        mapBox.removeElement(result.element)
+                        mapBox.updatePolygonStrokeWidthAndColor(result.element as OptElement.PolygonOptElement, 15.0,
+                            Color.RED)
+//                        mapBox.removeElement(result.element)
                     }
-                    is OptElement.PolygonObstacleElement -> {
-                        mapBox.removeElement(result.element)
-                    }
+
                     else -> {}
                 }
             }
@@ -58,23 +53,19 @@ class PolygonOptActivity : AppCompatActivity() {
             mapBox.flyTo(center, 12.0)
         }
         mViewBinding.addBtn.setOnClickListener {
-            val outer1 = PolygonUtil.generateRectanglePoints(0.006, 0.0009)
-            val obs1 = ObstacleCircle(center = center, diameter = 1.5, color = Color.RED)
-            val polygon = PolygonData(outer = outer1, strokeWidth = 5.0, fillColor = "#5544FF00".toColorInt(),
-                obstacles = listOf(obs1))
-            polygonOptElement = mapBox.addPolygon(polygon)
+            val points =
+                PolygonUtil.generateIrregularPolygonPoints(pointCount = 9, baseRadius = 0.002, irregularity = 0.5f)
+            polygonOptElement = mapBox.addPolygon(points, strokeColor = Color.BLACK, fillColor = Color.GREEN)
         }
         mViewBinding.addMultipleBtn.setOnClickListener {
-            val outer1 = PolygonUtil.generateRectanglePoints(0.007, 0.0008)
-            val obs1 = ObstacleCircle(center = center, diameter = 1.5, color = Color.RED)
-            val polygon1 = PolygonData(outer = outer1, strokeWidth = 3.0, strokeColor = Color.BLACK,
-                fillColor = "#5533FF00".toColorInt(),
-                obstacles = listOf(obs1))
 
-            val outer2 = PolygonUtil.generateTrianglePoints(0.001)
-            val polygon2 = PolygonData(outer = outer2, strokeColor = Color.YELLOW, fillColor = "#FF4444FF".toColorInt())
-
-            val polygons: MutableList<PolygonData> = mutableListOf()
+            val polygon1 =
+                PolygonUtil.generateIrregularPolygonPoints(basePoint = PointUtil.generateRandomPointNear(center),
+                    pointCount = 5, baseRadius = 0.002, irregularity = 0.5f)
+            val polygon2 =
+                PolygonUtil.generateIrregularPolygonPoints(basePoint = PointUtil.generateRandomPointNear(center),
+                    pointCount = 7, baseRadius = 0.01, irregularity = 0.6f)
+            val polygons: MutableList<List<Point>> = mutableListOf()
             polygons.add(polygon1)
             polygons.add(polygon2)
             mapBox.addPolygons(polygons)
@@ -98,5 +89,10 @@ class PolygonOptActivity : AppCompatActivity() {
                 Toast.makeText(this@PolygonOptActivity, "先添加一个多边形", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapBox.release()
     }
 }

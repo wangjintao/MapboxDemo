@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MapboxDemo">
         <activity
+            android:name=".LumpOptActivity"
+            android:exported="false" />
+        <activity
             android:name=".PolygonOptActivity"
             android:exported="false" />
         <activity

@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private val TAG = "MainActivity"
-        private val functionNames = listOf("显示地图", "图片", "圆点", "线", "多边形")
+        private val functionNames = listOf("显示地图", "图片", "圆点", "线", "多边形","块")
 
     }
 
@@ -54,6 +54,9 @@ class MainActivity : AppCompatActivity() {
 
                 functionNames[4] -> {
                     PolygonOptActivity.start(this)
+                }
+                functionNames[5]->{
+                    LumpOptActivity.start(this)
                 }
             }
 

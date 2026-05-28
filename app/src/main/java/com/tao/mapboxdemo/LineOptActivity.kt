@@ -70,13 +70,13 @@ class LineOptActivity : AppCompatActivity() {
         mViewBinding.addPointBtn.setOnClickListener {
             lineOptElement?.let {
                 val newPoint = PointUtil.generateRandomPointNear(center, 0.5)
-                mapBox.appendPoint(it, newPoint)
+                mapBox.appendLinePoint(it, newPoint)
             } ?: run {
                 if (linesOptElement.isNotEmpty()) {
                     val index = Random.nextInt(0, linesOptElement.size)
                     linesOptElement[index].let { line ->
                         val newPoint = PointUtil.generateRandomPointNear(center, 0.5)
-                        mapBox.appendPoint(line, newPoint)
+                        mapBox.appendLinePoint(line, newPoint)
                     }
 
                 }
